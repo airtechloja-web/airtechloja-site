@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Revise seu pedido e preencha seus dados para finalizar sua compra Airtech." />
+    <title>Airtech - Conheça a tecnologia FreshTouch super refrescante.</title>
+    <link rel="icon" href="./favicon.png" type="image/png" />
+    <link rel="stylesheet" href="./styles.css?v=24" />
+    <script type="module" src="./checkout.js?v=5"></script>
+    <script src="./st.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-main">
+        <a class="brand" href="./index.html" aria-label="Airtech — voltar à página do produto">
+          <img src="./airtech-logo.png" alt="" />
+          <span>Airtech</span>
+        </a>
+        <div class="header-actions">
+          <a class="cart-link" data-cart-link href="./checkout.html" aria-label="Carrinho, 0 itens">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 11.1a2 2 0 0 0 2 1.6h8.5a2 2 0 0 0 1.9-1.4L21 9H6M10 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm8 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" /></svg>
+            <span class="cart-link__label">Carrinho</span>
+            <span class="cart-count" data-cart-count>0</span>
+          </a>
+          <a class="contact-link" href="https://api.whatsapp.com/send?phone=5511976221771&amp;text=Ol%C3%A1%2C%20vim%20pelo%20Site%20e%20desejo%20falar%20com%20um%20Especialista" target="_blank" rel="noreferrer">Contate-nos</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="checkout-page">
+      <a class="checkout-back-to-store" href="./index.html"><span aria-hidden="true">←</span> Voltar a Loja</a>
+      <h1 id="checkout-title">Seu carrinho</h1>
+      <p class="checkout-intro" id="checkout-intro">Confira os itens e as quantidades do seu pedido.</p>
+
+      <section class="checkout-content" id="checkout-content" aria-label="Resumo do pedido" hidden>
+        <div class="checkout-items-panel">
+          <h2>Itens do pedido <span id="checkout-item-count"></span></h2>
+          <div class="checkout-items" id="checkout-items"></div>
+          <a class="checkout-continue" href="./index.html">Continuar comprando</a>
+        </div>
+        <aside class="checkout-summary">
+          <h2>Resumo do pedido</h2>
+          <div class="checkout-summary__line">
+            <span>Itens (<span id="checkout-summary-count">0</span>)</span>
+            <strong id="checkout-subtotal">R$ 0,00</strong>
+          </div>
+          <div class="checkout-summary__total">
+            <span>Total</span>
+            <strong id="checkout-total">R$ 0,00</strong>
+          </div>
+          <button class="checkout-pay-button" id="start-checkout" type="button">Continuar para pagamento</button>
+          <p class="checkout-secure-note">Você preencherá seus dados nas próximas etapas.</p>
+        </aside>
+      </section>
+
+      <section class="checkout-flow" id="checkout-flow" aria-label="Finalização da compra" hidden>
+        <nav class="checkout-steps" aria-label="Etapas do checkout">
+          <div class="checkout-steps__item is-current" data-step-indicator="identification" aria-current="step">
+            <span>1</span><strong>Identificação</strong>
+          </div>
+          <div class="checkout-steps__item" data-step-indicator="delivery">
+            <span>2</span><strong>Entrega</strong>
+          </div>
+          <div class="checkout-steps__item" data-step-indicator="payment">
+            <span>3</span><strong>Pagamento</strong>
+          </div>
+        </nav>
+
+        <div class="checkout-flow__content">
+          <section class="checkout-step" data-checkout-step="identification" aria-labelledby="identification-title">
+            <h2 id="identification-title">1. Identificação</h2>
+            <p class="checkout-step__intro">Informe seus dados para o pedido.</p>
+            <form id="identification-form" class="checkout-form">
+              <label class="checkout-field checkout-field--full" for="customer-name">
+                Nome completo
+                <input id="customer-name" name="name" type="text" autocomplete="name" required />
+              </label>
+              <label class="checkout-field" for="customer-phone">
+                Número de telefone
+                <input id="customer-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" pattern="(?:[0-9]|\s|\+|\(|\)|-){10,20}" title="Digite um telefone com DDD." required />
+              </label>
+              <label class="checkout-field" for="customer-email">
+                E-mail
+                <input id="customer-email" name="email" type="email" autocomplete="email" required />
+              </label>
+              <div class="checkout-form__actions checkout-field--full">
+                <button class="checkout-next-button" type="submit">Continuar para entrega</button>
+              </div>
+            </form>
+          </section>
+
+          <section class="checkout-step" data-checkout-step="delivery" aria-labelledby="delivery-title" hidden>
+            <h2 id="delivery-title">2. Entrega</h2>
+            <p class="checkout-step__intro">Informe o endereço para entrega do pedido.</p>
+            <form id="delivery-form" class="checkout-form">
+              <label class="checkout-field checkout-field--full" for="delivery-street">
+                Rua e número
+                <input id="delivery-street" name="street" type="text" autocomplete="address-line1" required />
+              </label>
+              <label class="checkout-field" for="delivery-neighborhood">
+                Bairro
+                <input id="delivery-neighborhood" name="neighborhood" type="text" autocomplete="address-level3" required />
+              </label>
+              <label class="checkout-field" for="delivery-complement">
+                Complemento <span>(opcional)</span>
+                <input id="delivery-complement" name="complement" type="text" autocomplete="address-line2" />
+              </label>
+              <label class="checkout-field" for="delivery-postal-code">
+                CEP
+                <input id="delivery-postal-code" name="postalCode" type="text" autocomplete="postal-code" inputmode="numeric" pattern="[0-9]{5}-?[0-9]{3}" maxlength="9" placeholder="00000-000" title="Digite um CEP válido com 8 números." required />
+              </label>
+              <label class="checkout-field" for="delivery-city">
+                Cidade
+                <input id="delivery-city" name="city" type="text" autocomplete="address-level2" required />
+              </label>
+              <label class="checkout-field checkout-field--state" for="delivery-state">
+                UF
+                <select id="delivery-state" name="state" autocomplete="address-level1" required>
+                  <option value="">Selecione</option>
+                  <option value="AC">AC</option><option value="AL">AL</option><option value="AP">AP</option>
+                  <option value="AM">AM</option><option value="BA">BA</option><option value="CE">CE</option>
+                  <option value="DF">DF</option><option value="ES">ES</option><option value="GO">GO</option>
+                  <option value="MA">MA</option><option value="MT">MT</option><option value="MS">MS</option>
+                  <option value="MG">MG</option><option value="PA">PA</option><option value="PB">PB</option>
+                  <option value="PR">PR</option><option value="PE">PE</option><option value="PI">PI</option>
+                  <option value="RJ">RJ</option><option value="RN">RN</option><option value="RS">RS</option>
+                  <option value="RO">RO</option><option value="RR">RR</option><option value="SC">SC</option>
+                  <option value="SP">SP</option><option value="SE">SE</option><option value="TO">TO</option>
+                </select>
+              </label>
+              <div class="checkout-form__actions checkout-field--full">
+                <button class="checkout-previous-button" type="button" data-go-to="identification">Voltar</button>
+                <button class="checkout-next-button" type="submit">Continuar para pagamento</button>
+              </div>
+            </form>
+          </section>
+
+          <section class="checkout-step" data-checkout-step="payment" aria-labelledby="payment-title" hidden>
+            <h2 id="payment-title" tabindex="-1">3. Pagamento</h2>
+            <p class="checkout-step__intro">Escolha uma forma de pagamento.</p>
+            <div class="checkout-payment-options">
+              <section class="checkout-payment-option checkout-payment-option--pix" aria-label="Pagamento via Pix">
+                <img class="checkout-pix-logo" src="./pix-logo.png" alt="Pix" />
+                <button class="checkout-next-button" id="pay-pix" type="button">Pagar no Pix</button>
+              </section>
+              <section class="checkout-payment-option checkout-payment-option--card" aria-labelledby="card-payment-title">
+                <div>
+                  <h3 id="card-payment-title">Pagamento com cartão</h3>
+                  <form class="checkout-card-form" aria-label="Dados do cartão">
+                    <label class="checkout-card-field checkout-card-field--full" for="cardholder-name">
+                      <span class="checkout-card-field__label">Nome do titular</span>
+                      <input class="checkout-card-element" id="cardholder-name" data-payment-field="cardholder-name" type="text" autocomplete="cc-name" autocapitalize="words" maxlength="80" required />
+                    </label>
+                    <label class="checkout-card-field checkout-card-field--full" for="cardholder-cpf">
+                      <span class="checkout-card-field__label">CPF do titular</span>
+                      <input class="checkout-card-element" id="cardholder-cpf" data-payment-field="cardholder-cpf" type="text" inputmode="numeric" autocomplete="off" maxlength="14" placeholder="000.000.000-00" required />
+                    </label>
+                    <div class="checkout-card-field checkout-card-field--full" role="group" aria-labelledby="card-number-label">
+                      <span class="checkout-card-field__label" id="card-number-label">Número do cartão</span>
+                      <input class="checkout-card-element" id="card-number" data-payment-field="card-number" type="text" inputmode="numeric" autocomplete="cc-number" aria-labelledby="card-number-label" maxlength="19" placeholder="0000 0000 0000 0000" required />
+                    </div>
+                    <label class="checkout-card-field" for="card-expiry">
+                      <span class="checkout-card-field__label" id="card-expiry-label">Validade</span>
+                      <input class="checkout-card-element" id="card-expiry" data-payment-field="card-expiry" type="text" inputmode="numeric" autocomplete="cc-exp" maxlength="5" placeholder="MM/AA" required />
+                    </label>
+                    <label class="checkout-card-field" for="card-cvv">
+                      <span class="checkout-card-field__label" id="card-cvc-label">CVV</span>
+                      <input class="checkout-card-element" id="card-cvv" data-payment-field="card-cvv" type="text" inputmode="numeric" autocomplete="cc-csc" maxlength="3" required />
+                    </label>
+                    <button class="checkout-next-button checkout-card-form__submit" type="button">Pagar com cartão</button>
+                  </form>
+                </div>
+              </section>
+            </div>
+            <p class="checkout-payment-status" role="status" aria-live="polite" hidden></p>
+            <div class="checkout-form__actions">
+              <button class="checkout-previous-button" type="button" data-go-to="delivery">Voltar para entrega</button>
+            </div>
+          </section>
+        </div>
+
+        <aside class="checkout-flow__summary" aria-label="Resumo do pedido">
+          <h2>Resumo do pedido</h2>
+          <div id="checkout-flow-items"></div>
+          <div class="checkout-summary__total">
+            <span>Total</span>
+            <strong id="checkout-flow-total">R$ 0,00</strong>
+          </div>
+          <button class="checkout-back-to-cart" id="back-to-cart" type="button">Voltar ao carrinho</button>
+        </aside>
+      </section>
+
+      <section class="checkout-empty" id="checkout-empty" hidden>
+        <div class="checkout-empty__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M3 4h2l2.2 11.1a2 2 0 0 0 2 1.6h8.5a2 2 0 0 0 1.9-1.4L21 9H6M10 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm8 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" /></svg>
+        </div>
+        <h2>Seu carrinho está vazio</h2>
+        <p>Escolha o tamanho do colchão e adicione o produto ao carrinho para continuar.</p>
+        <a class="checkout-back-button" href="./index.html">Voltar ao produto</a>
+      </section>
+    </main>
+  </body>
+</html>

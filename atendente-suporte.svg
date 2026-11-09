@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-labelledby="title">
+  <title id="title">Atendente com headset</title>
+  <path d="M80 468c16-72 63-122 132-141l27-7 61 101 61-101 27 7c69 19 116 69 132 141 17 62-13 82-66 82H146c-53 0-83-20-66-82Z" fill="#000" />
+  <path d="M204 142c0-47 34-75 96-75s96 28 96 75v62c0 78-39 137-96 137s-96-59-96-137v-62Z" fill="#000" />
+  <path d="M164 198v-6c0-77 59-137 136-137s136 60 136 137v6" fill="none" stroke="#000" stroke-linecap="round" stroke-width="22" />
+  <path d="M193 193c0-66 45-111 107-111s107 45 107 111" fill="none" stroke="#fff" stroke-width="15" />
+  <rect x="140" y="188" width="50" height="96" rx="25" fill="#000" />
+  <rect x="410" y="188" width="50" height="96" rx="25" fill="#000" />
+  <path d="M425 260v11c0 20-16 31-38 39l-37 12" fill="none" stroke="#fff" stroke-linecap="round" stroke-width="22" />
+  <path d="M425 260v11c0 20-16 31-38 39l-37 12" fill="none" stroke="#000" stroke-linecap="round" stroke-width="9" />
+  <rect x="286" y="266" width="78" height="48" rx="24" fill="#fff" />
+  <rect x="300" y="280" width="58" height="28" rx="14" fill="#000" />
+  <path d="m212 326 68 117 20-61 20 61 68-117-25-8-63 95-63-95-25 8Z" fill="#fff" />
+  <path d="M267 357c18 9 48 9 66 0-3 17-15 28-33 28s-30-11-33-28Z" fill="#000" />
+  <path d="m294 381 6 62 6-62-6-8-6 8Z" fill="#000" />
+</svg>

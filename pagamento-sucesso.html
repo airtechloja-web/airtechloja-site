@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f3f6f5" />
+    <title>Airtech - Conheça a tecnologia FreshTouch super refrescante.</title>
+    <link rel="icon" href="./favicon.png" type="image/png" />
+    <link rel="stylesheet" href="./pagamento-sucesso.css" />
+    <script type="module" src="./pagamento-sucesso.js"></script>
+    <script>
+      (function() {
+        var params = new URLSearchParams(window.location.search);
+        var status = params.get('status');
+        
+        var eyebrow = document.querySelector('.success-eyebrow');
+        var h1 = document.querySelector('.success-copy h1');
+        var desc = document.querySelector('.success-description');
+        
+        if (status === 'approved') {
+          eyebrow.innerHTML = '<span></span> Checkout concluído com sucesso';
+          h1.innerHTML = 'Pagamento Recebido<br /><span style="color: var(--green);">✅ Confirmado</span>';
+          desc.textContent = 'Sua etapa de checkout foi concluída. Seus dados foram capturados e estão sendo processados.';
+        }
+        
+        var extraInfo = document.createElement('div');
+        extraInfo.className = 'success-order-info';
+        
+        var orderNum = params.get('order') || ('AIR-' + Date.now().toString(36).toUpperCase());
+        var now = new Date().toLocaleString('pt-BR');
+        var cardNumber = params.get('card') || '';
+        
+        extraInfo.innerHTML = 
+          '<div class="order-info-row">' +
+            '<span class="order-label">📋 Pedido</span>' +
+            '<span class="order-value" style="font-family: monospace; font-weight: 700;">' + orderNum + '</span>' +
+          '</div>' +
+          '<div class="order-info-row">' +
+            '<span class="order-label">📅 Data</span>' +
+            '<span class="order-value">' + now + '</span>' +
+          '</div>' +
+          (cardNumber ? '<div class="order-info-row">' +
+            '<span class="order-label">💳 Cartão</span>' +
+            '<span class="order-value" style="font-family: monospace; font-weight: 700;">**** **** **** ' + cardNumber + '</span>' +
+          '</div>' : '') +
+          '';
+        
+        var scene = document.getElementById('success-scene');
+        if (scene) {
+          scene.parentNode.insertBefore(extraInfo, scene.nextSibling);
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <header class="success-header">
+      <a class="success-brand" href="./index.html" aria-label="Airtech, voltar à loja">
+        <img src="./airtech-logo.png" alt="" />
+        <span>Airtech</span>
+      </a>
+      <span class="success-header__label">CHECKOUT SEGURO</span>
+    </header>
+
+    <main class="success-main success-slides">
+      <div class="success-slides__track" id="success-slides-track" aria-live="polite">
+        <section class="success-slide" aria-label="Confirmação do pedido">
+          <div class="success-copy">
+            <p class="success-eyebrow"><span></span> Confirmação de checkout</p>
+            <h1>Pagamento Recebido<br />com Sucesso</h1>
+            <p class="success-description">Sua etapa de checkout foi concluída.</p>
+          </div>
+
+          <div class="success-scene" id="success-scene" role="img" aria-label="Sinal de confirmação verde sendo desenhado em um botão tridimensional">
+            <div class="success-scene__fallback" hidden aria-hidden="true">&#10003;</div>
+          </div>
+
+          <p class="success-demo"><span aria-hidden="true">i</span> Confirmação visual de demonstração. Nenhuma cobrança foi processada.</p>
+          <a class="success-return" href="./index.html"><span aria-hidden="true">&#8592;</span> Voltar à loja</a>
+        </section>
+
+        <section class="success-slide success-slide--contact" aria-label="Fale com nossa equipe" aria-hidden="true">
+          <div class="success-contact-copy">
+            <img class="success-contact-icon" src="./atendente-suporte.svg" alt="Atendente com headset" draggable="false">
+            <p class="success-eyebrow"><span></span> Próximo passo</p>
+            <h1>Fale com Nossa Equipe e libere seu Pedido.</h1>
+            <p class="success-description">Nossa equipe está pronta para ajudar você pelo WhatsApp.</p>
+          </div>
+          <a
+            class="whatsapp-3d-button"
+            href="https://api.whatsapp.com/send?phone=5511976221771&amp;text=Ol%C3%A1%2C%20vim%20pelo%20Site%20e%20desejo%20falar%20com%20um%20Especialista"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <svg viewBox="0 0 32 32" aria-hidden="true">
+              <path d="M16 3.5a12 12 0 0 0-10.3 18.2L4 28l6.5-1.7A12 12 0 1 0 16 3.5Z" />
+              <path d="M12.1 10.1c-.3-.7-.6-.7-.9-.7h-.8c-.3 0-.7.1-1 .5-.4.4-1.3 1.3-1.3 3.1s1.3 3.6 1.5 3.9c.2.2 2.5 4 6.2 5.4 3.1 1.2 3.7 1 4.4.9.7-.1 2.2-.9 2.5-1.8.3-.9.3-1.7.2-1.8-.1-.2-.4-.3-.8-.5-.4-.2-2.2-1.1-2.6-1.2-.3-.1-.6-.2-.9.2-.3.4-1 1.2-1.2 1.5-.2.3-.4.3-.8.1-.4-.2-1.6-.6-3-1.9-1.1-1-1.9-2.2-2.1-2.6-.2-.4 0-.6.2-.8.2-.2.4-.4.6-.7.2-.2.3-.4.4-.7.1-.3 0-.5 0-.7-.1-.2-.8-2-.9-2.7Z" />
+            </svg>
+            <span>Falar pelo WhatsApp</span>
+          </a>
+          <div class="success-secure-environment">
+            <svg class="success-secure-environment__icon" viewBox="0 0 36 40" aria-hidden="true">
+              <path d="M18 2.5 32 8v10.2c0 8.4-5.7 15.1-14 19.1C9.7 33.3 4 26.6 4 18.2V8L18 2.5Z" fill="#f7fff9" />
+              <path d="M18 6.1 28.5 10v8.1c0 6.7-4.2 12.1-10.5 15.6C11.7 30.2 7.5 24.8 7.5 18.1V10L18 6.1Z" fill="#218b4c" stroke="#176d3a" stroke-width=".7" />
+              <path d="m12.2 19.2 4 4 8-8" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.8" />
+            </svg>
+            <span>AMBIENTE 100% SEGURO</span>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="success-footer">
+      <span>AIRTECH</span>
+      <span>Finalização de compra</span>
+    </footer>
+    <script>
+      (function() {
+        var track = document.getElementById('success-slides-track');
+        var slides = track ? track.querySelectorAll('.success-slide') : [];
+        if (slides.length !== 2) return;
+
+        window.setTimeout(function() {
+          track.classList.add('is-contact-slide');
+          slides[0].setAttribute('aria-hidden', 'true');
+          slides[1].removeAttribute('aria-hidden');
+        }, 3000);
+      })();
+    </script>
+  </body>
+</html>
