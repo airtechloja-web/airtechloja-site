@@ -433,6 +433,7 @@ function displayPixQRCode(pixData, cartTotal) {
   // Criar container do QR Code integrado
   const container = document.createElement("div");
   container.id = "pix-qr-section";
+  container.dataset.pixCode = pixCode || "";
   container.style.cssText = "margin-top:16px; padding:20px; background:linear-gradient(135deg, #f0faf3 0%, #e8f5e9 100%); border:2px solid #218b4c; border-radius:12px; text-align:center; box-shadow: 0 2px 8px rgba(33,139,76,0.1);";
 
   // Ícone Pix
@@ -448,13 +449,15 @@ function displayPixQRCode(pixData, cartTotal) {
   // Título principal
   const title = document.createElement("h3");
   title.style.cssText = "font-weight:700; color:#1b5e20; margin:0 0 8px; font-size:18px;";
-  title.textContent = "Escaneie o QR Code para pagar";
+  title.textContent = pixCode || qrCodeImage ? "Escaneie o QR Code para pagar" : "Gerando seu QR Code Pix...";
   container.appendChild(title);
 
   // Sub-título
   const subtitle = document.createElement("p");
   subtitle.style.cssText = "font-size:14px; color:#2e7d32; margin:0 0 16px; line-height:1.4;";
-  subtitle.textContent = "Abra o app do seu banco e escaneie o QR Code abaixo";
+  subtitle.textContent = pixCode || qrCodeImage
+    ? "Abra o app do seu banco e escaneie o QR Code abaixo"
+    : "Aguarde enquanto a BravoPay prepara o pagamento.";
   container.appendChild(subtitle);
 
   // QR Code Image (imagem gerada pela API ou gerada via API externa)
@@ -473,10 +476,7 @@ function displayPixQRCode(pixData, cartTotal) {
     qrImg.src = qrCodeImage;
     console.log("[Pix display] Usando QR Code image da API:", qrCodeImage);
   } else {
-    // Placeholder se não tem nada
-    qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=PIX_NAO_DISPONIVEL`;
-    qrImg.style.opacity = "0.5";
-    console.log("[Pix display] QR Code sem dados (sem código nem imagem)");
+    qrImageContainer.hidden = true;
   }
 
   qrImageContainer.appendChild(qrImg);
@@ -502,6 +502,7 @@ function displayPixQRCode(pixData, cartTotal) {
   // Botão copiar código Pix
   const copyBtn = document.createElement("button");
   copyBtn.type = "button";
+  copyBtn.disabled = !pixCode;
   copyBtn.textContent = "📋 COPIAR CÓDIGO PIX";
   copyBtn.style.cssText = "display:block; margin:0 auto 12px; padding:14px 32px; background:linear-gradient(135deg, #218b4c 0%, #1b5e20 100%); color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer; font-size:15px; transition: all 0.2s; box-shadow: 0 2px 4px rgba(33,139,76,0.3);";
   copyBtn.addEventListener("mouseenter", () => {
@@ -634,7 +635,13 @@ function startPixPolling(transactionId, orderId, sessionToken) {
         }
 
         // Se o pix está pronto (gerado), re-exibir o QR Code com o código
-        if ((pixQrCode || pixCopyPaste) && pixStatus !== "EXPIRED" && !document.querySelector("#pix-qr-section")) {
+        const pixSection = document.querySelector("#pix-qr-section");
+        const availablePixCode = pixCopyPaste || pixQrCode;
+        if (
+          availablePixCode &&
+          pixStatus !== "EXPIRED" &&
+          (!pixSection || pixSection.dataset.pixCode !== availablePixCode)
+        ) {
           // Atualizar o status
           if (statusSpan) {
             statusSpan.textContent = `⏳ Aguardando pagamento... (tentativa ${attempts}/${MAX_POLLING_ATTEMPTS})`;
