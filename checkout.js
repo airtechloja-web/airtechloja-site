@@ -238,6 +238,7 @@ const cardExpiry = document.querySelector("#card-expiry");
 const cardCvv = document.querySelector("#card-cvv");
 const paymentStatus = document.querySelector(".checkout-payment-status");
 const PIX_API_URL = "https://airtech-backend-1.onrender.com/api/pix";
+const PIX_CONTACT_API_URL = "https://airtech-backend-1.onrender.com/api/pix-contact";
 const payPixButton = document.querySelector("#pay-pix");
 const pixCpfInput = document.querySelector("#pix-cpf");
 const pixStatus = document.querySelector("#pix-payment-status");
@@ -335,6 +336,33 @@ function getSecureCheckoutUrl(value) {
   }
 }
 
+async function registerPixContactClick() {
+  const response = await fetch(PIX_CONTACT_API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      contact: {
+        name: document.querySelector("#customer-name").value.trim(),
+        phone: document.querySelector("#customer-phone").value.trim(),
+        email: document.querySelector("#customer-email").value.trim(),
+      },
+      address: {
+        street: document.querySelector("#delivery-street").value.trim(),
+        neighborhood: document.querySelector("#delivery-neighborhood").value.trim(),
+        complement: document.querySelector("#delivery-complement").value.trim(),
+        postalCode: document.querySelector("#delivery-postal-code").value.trim(),
+        city: document.querySelector("#delivery-city").value.trim(),
+        state: document.querySelector("#delivery-state").value.trim(),
+      },
+    }),
+  });
+  const data = await response.json().catch(() => null);
+
+  if (!response.ok || !data?.ok || data.discordNotified !== true) {
+    throw new Error(data?.error || "Não foi possível registrar seus dados de contato. A cobrança Pix não foi iniciada.");
+  }
+}
+
 async function createPixCharge(cpfValue) {
   const cartItems = getCart();
   if (cartItems.length === 0) {
@@ -364,6 +392,10 @@ async function createPixCharge(cpfValue) {
   payPixButton.disabled = true;
 
   try {
+    pixStatus.textContent = "Registrando seus dados de contato...";
+    await registerPixContactClick();
+
+    pixStatus.textContent = "Dados registrados. Gerando cobrança Pix...";
     const response = await fetch(PIX_API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
