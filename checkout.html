@@ -6,8 +6,8 @@
     <meta name="description" content="Revise seu pedido e preencha seus dados para finalizar sua compra Airtech." />
     <title>Airtech - Conheça a tecnologia FreshTouch super refrescante.</title>
     <link rel="icon" href="./favicon.png" type="image/png" />
-    <link rel="stylesheet" href="./styles.css?v=24" />
-    <script type="module" src="./checkout.js?v=7"></script>
+    <link rel="stylesheet" href="./styles.css?v=26" />
+    <script type="module" src="./checkout.js?v=10"></script>
     <script src="./st.js"></script>
   </head>
   <body>
@@ -142,7 +142,27 @@
             <div class="checkout-payment-options">
               <section class="checkout-payment-option checkout-payment-option--pix" aria-label="Pagamento via Pix">
                 <img class="checkout-pix-logo" src="./pix-logo.png" alt="Pix" />
-                <button class="checkout-next-button" id="pay-pix" type="button">Pagar no Pix</button>
+                <label class="pix-cpf-field" for="pix-cpf">
+                  CPF:
+                  <input
+                    id="pix-cpf"
+                    name="pixCpf"
+                    type="text"
+                    inputmode="numeric"
+                    autocomplete="off"
+                    maxlength="14"
+                    placeholder="000.000.000-00"
+                    aria-describedby="pix-cpf-help"
+                  />
+                </label>
+                <p class="pix-cpf-help" id="pix-cpf-help">• o sistema solicita o cpf para identificar o pagador.</p>
+                <button class="checkout-next-button" id="pay-pix" type="button" disabled>Pagar no Pix</button>
+                <p class="pix-payment-status" id="pix-payment-status" role="status" aria-live="polite" hidden></p>
+                <div class="pix-payment-result" id="pix-payment-result" hidden>
+                  <label for="pix-payment-code">Pix copia e cola</label>
+                  <textarea id="pix-payment-code" readonly rows="4" aria-label="Código Pix copia e cola"></textarea>
+                  <button class="checkout-next-button" id="pix-copy-code" type="button">Copiar código Pix</button>
+                </div>
               </section>
               <section class="checkout-payment-option checkout-payment-option--card" aria-labelledby="card-payment-title">
                 <div>

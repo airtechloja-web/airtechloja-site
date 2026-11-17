@@ -317,6 +317,12 @@ a { color: inherit; text-decoration: none; }
 .checkout-payment-option--pix { min-height: 120px; flex-direction: column; justify-content: center; gap: 12px; }
 .checkout-pix-logo { display: block; width: 64px; height: 64px; object-fit: contain; }
 .checkout-payment-option--pix .checkout-next-button { width: min(100%, 260px); }
+.checkout-payment-option--pix .checkout-next-button:disabled { border-color: #b7c8d4; color: #687783; background: #e5ebef; cursor: not-allowed; }
+.pix-cpf-field { width: min(100%, 320px); display: grid; gap: 6px; color: #34495a; font-size: 13px; font-weight: 600; text-align: left; }
+.pix-cpf-field input { width: 100%; min-height: 42px; padding: 9px 12px; border: 1px solid #cfd9e1; border-radius: 5px; color: #243746; background: #fff; font: inherit; font-weight: 400; }
+.pix-cpf-field input:focus { border-color: #2782c3; outline: 2px solid #2782c333; }
+.pix-cpf-help { width: min(100%, 320px); margin: -6px 0 0; color: #687783; font-size: 11px; line-height: 1.4; text-align: left; }
+.pix-payment-status { width: min(100%, 320px); margin: 0; color: #8a4b08; font-size: 12px; line-height: 1.5; text-align: left; }
 .checkout-payment-option--card { align-items: stretch; }
 .checkout-payment-option--card > div { width: 100%; }
 .checkout-card-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 16px; }
@@ -327,10 +333,74 @@ a { color: inherit; text-decoration: none; }
 .checkout-card-element:focus { border-color: #2782c3; outline: 2px solid #2782c333; }
 .checkout-card-form__submit { grid-column: 1 / -1; width: 100%; }
 .checkout-payment-status { margin: 0; color: #8a4b08; font-size: 12px; line-height: 1.5; }
+.pix-payment-result { width: min(100%, 320px); display: grid; gap: 10px; padding: 14px; border: 1px solid #cde4d5; border-radius: 6px; background: #f5fbf7; text-align: left; }
+.pix-payment-result[hidden] { display: none; }
+.pix-payment-result label { color: #34495a; font-size: 13px; font-weight: 600; }
+.pix-payment-result textarea { width: 100%; padding: 11px 12px; border: 1px solid #cfd9e1; border-radius: 5px; color: #243746; background: #fff; font: inherit; }
+.pix-payment-result textarea:focus { border-color: #2782c3; outline: 2px solid #2782c333; }
+.pix-payment-result textarea { min-height: 92px; resize: vertical; font-size: 12px; overflow-wrap: anywhere; }
+.pix-payment-result button { justify-self: start; }
 .checkout-flow .checkout-form__actions > button:only-child { min-width: 150px; }
 .checkout-empty { max-width: 600px; margin: 30px auto; padding: 38px 28px; text-align: center; }
 .checkout-empty__icon { width: 52px; height: 52px; display: grid; place-items: center; margin: 0 auto 12px; color: var(--brand-blue); }
 .checkout-empty__icon svg { width: 38px; height: 38px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+
+/* PIX QR Code Section */
+#pix-qr-section {
+  margin-top: 12px;
+  padding: 16px;
+  background: #f7fff9;
+  border: 2px solid #218b4c;
+  border-radius: 8px;
+  text-align: center;
+  animation: pix-qr-appear 0.4s ease-out both;
+}
+
+@keyframes pix-qr-appear {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#pix-qr-section img[alt="QR Code Pix"],
+#pix-qr-section img[alt*="QR Code"] {
+  max-width: 200px;
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+#pix-qr-section button[type="button"] {
+  display: block;
+  margin: 0 auto 12px;
+  padding: 10px 24px;
+  background: #218b4c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+#pix-qr-section button[type="button"]:hover {
+  background: #1d7a3f;
+}
+
+#pix-qr-section p:last-of-type {
+  font-size: 12px;
+  color: #666;
+  margin: 0 0 8px;
+  line-height: 1.4;
+}
+
+#pix-payment-status {
+  display: block;
+  font-size: 13px;
+  color: #0066cc;
+  font-weight: 600;
+  margin-top: 8px;
+}
 .checkout-empty h2 { margin-bottom: 8px; }
 .checkout-empty p { margin: 0 auto 20px; color: #666; font-size: 14px; line-height: 1.6; }
 .checkout-back-button { width: auto; min-width: 190px; text-decoration: none; }
@@ -486,4 +556,30 @@ a { color: inherit; text-decoration: none; }
   .brand img { width: 43px; height: 43px; }
   .highlight-grid { grid-template-columns: 1fr 1fr; }
   .highlight:last-child { grid-column: 1 / -1; }
+}
+
+/* PIX QR Code Mobile */
+@media (max-width: 720px) {
+  #pix-qr-section {
+    padding: 12px;
+    margin-top: 10px;
+  }
+  
+  #pix-qr-section img[alt="QR Code Pix"],
+  #pix-qr-section img[alt*="QR Code"] {
+    max-width: 160px;
+  }
+  
+  #pix-qr-section button[type="button"] {
+    padding: 8px 18px;
+    font-size: 13px;
+  }
+  
+  #pix-qr-section p:last-of-type {
+    font-size: 11px;
+  }
+  
+  #pix-payment-status {
+    font-size: 12px;
+  }
 }
